@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Form Registrasi</title>
+</head>
+<body>
+    <form id="myForm" method="POST" action="" style="border: 2px solid black; padding: 30px; border-radius: 15px; box-shadow: 5px 10px #888888;">
+        <label for="nik">NIK:</label><br>
+        <input type="text" id="nik" name="nik"><br><br>
+        <label for="name">Nama:</label><br>
+        <input type="text" id="name" name="name"><br><br>
+
+        <label for="kabupaten">Kabupaten:</label><br>
+        <select id="kabupaten" name="kabupaten"></select><br><br>
+
+        <label for="kecamatan">Kecamatan:</label><br>
+        <select id="kecamatan" name="kecamatan"></select><br><br>
+
+        <label for="desa">Desa:</label><br>
+        <select id="desa" name="desa"></select><br><br>
+
+        <input type="submit" value="Submit">
+    </form>
+
+    <script>
+        var data = {
+            "Bandung": {
+                "Baleendah": ["Desa A", "Desa B", "Desa C"],
+                "Bojongsoang": ["Desa D", "Desa E", "Desa F"],
+                "Cangkuang": ["Desa G", "Desa H", "Desa I"]
+            },
+            "Jakarta": {
+                "Kecamatan A": ["Desa J", "Desa K", "Desa L"],
+                "Kecamatan B": ["Desa M", "Desa N", "Desa O"],
+                "Kecamatan C": ["Desa P", "Desa Q", "Desa R"]
+            }
+        };
+
+        var kabupatenSelect = document.getElementById('kabupaten');
+        var kecamatanSelect = document.getElementById('kecamatan');
+        var desaSelect = document.getElementById('desa');
+
+        for (var kabupaten in data) {
+            var option = document.createElement('option');
+            option.text = kabupaten;
+            option.value = kabupaten;
+            kabupatenSelect.add(option);
+        }
+
+        kabupatenSelect.addEventListener('change', function() {
+            kecamatanSelect.innerHTML = "";
+            desaSelect.innerHTML = "";
+            var selectedKabupaten = this.value;
+            var kecamatanData = data[selectedKabupaten];
+            for (var kecamatan in kecamatanData) {
+                var option = document.createElement('option');
+                option.text = kecamatan;
+                option.value = kecamatan;
+                kecamatanSelect.add(option);
+            }
+        });
+
+        kecamatanSelect.addEventListener('change', function() {
+            desaSelect.innerHTML = "";
+            var selectedKabupaten = kabupatenSelect.value;
+            var selectedKecamatan = this.value;
+            var desas = data[selectedKabupaten][selectedKecamatan];
+            for (var i = 0; i < desas.length; i++) {
+                var option = document.createElement('option');
+                option.text = desas[i];
+                option.value = desas[i];
+                desaSelect.add(option);
+            }
+        });
+    </script>
+</body>
+</html>

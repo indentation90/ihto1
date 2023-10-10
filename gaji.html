@@ -1,0 +1,83 @@
+<html>
+<body>
+    <form id="formPegawai">
+        <label for="nama">Nama:</label><br>
+        <input type="text" id="nama" name="nama"><br><br>
+        <label for="golongan">Golongan:</label><br>
+        <select id="golongan" name="golongan" onchange="isiOtomatisGaji(event)">
+            <option value="">-</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+        </select><br><br>
+        <label for="gaji">Gaji Pokok:</label><br>
+        <input type="number" id="gaji" name="gaji" readonly><br><br>
+        <label for="potongan">Potongan (10%):</label><br>
+        <input type="number" id="potongan" name="potongan" readonly><br><br>
+        <label for="total">Total Gaji:</label><br>
+        <input type="number" id="total" name="total" readonly><br><br>
+        <input type="button" value="Tambah" onclick="tambahData()">
+    </form>
+
+    <table id="tabelPegawai" border="1">
+        <tr>
+            <th>Nama</th>
+            <th>Golongan</th>
+            <th>Gaji Pokok</th>
+            <th>Potongan</th>
+            <th>Total Gaji</th>
+        </tr>
+    </table>
+
+    <script>
+        function isiOtomatisGaji(event) {
+            let gaji = 0;
+            switch (event.target.value) {
+                case 'A':
+                    gaji = 5000;
+                    break;
+                case 'B':
+                    gaji = 4000;
+                    break;
+                case 'C':
+                    gaji = 3000;
+                    break;
+            }
+            document.getElementById('gaji').value = gaji;
+            let potongan = gaji * 0.10;
+            document.getElementById('potongan').value = potongan;
+            document.getElementById('total').value = gaji - potongan;
+        }
+
+        function tambahData() {
+            const elemenNama = document.getElementById('nama');
+            const elemenGolongan = document.getElementById('golongan');
+            const elemenGaji = document.getElementById('gaji');
+            const elemenPotongan = document.getElementById('potongan');
+            const elemenTotal = document.getElementById('total');
+            
+            const tabelPegawai = document.getElementById('tabelPegawai');
+            const baris = tabelPegawai.insertRow(-1);
+
+            const celNama = baris.insertCell(0);
+            const celGolongan = baris.insertCell(1);
+            const celGaji = baris.insertCell(2);
+            const celPotongan = baris.insertCell(3);
+            const celTotal = baris.insertCell(4);
+
+            celNama.innerHTML = elemenNama.value;
+            celGolongan.innerHTML = elemenGolongan.value;
+            celGaji.innerHTML = elemenGaji.value;
+            celPotongan.innerHTML = elemenPotongan.value;
+            celTotal.innerHTML = elemenTotal.value;
+
+            elemenNama.value = "";
+            elemenGolongan.value = "A";
+            elemenGaji.value = "";
+            elemenPotongan.value = "";
+            elemenTotal.value = "";
+        }
+    </script>
+
+</body>
+</html>
